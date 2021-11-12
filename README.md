@@ -23,7 +23,12 @@ apt-get update
 apt-get install isc-dhcp-server -y
 ```
 
-![image](https://user-images.githubusercontent.com/74232912/141284858-27edef5e-bbfb-497f-8696-7dbe599f3b8d.png)
+![image](https://user-images.githubusercontent.com/74232912/141284858-27edef5e-bbfb-497f-8696-7dbe599f3b8d.png)  
+
+Setelah itu tambahkan konfigurasi pada /etc/default/isc-dhcp-server  
+```
+INTERFACES="eth0"
+```
 
 
 #### Water7 sebagai Proxy Server, maka pada Water7 diinstall squid
