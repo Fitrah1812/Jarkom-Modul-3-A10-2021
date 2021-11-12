@@ -337,6 +337,8 @@ Hasilnya adalah sebagai berikut :
 
 ![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2010/testing1.jpeg)
 
+#### Berikut tampilan apabila melewati jam yang sudah ditentukan
+
 ![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2010/testing2.jpeg)
 
 
