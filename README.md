@@ -240,13 +240,24 @@ hwaddress ether d2:61:cf:ce:81:09
 ### 8. Pada Loguetown, proxy harus bisa diakses dengan nama jualbelikapal.yyy.com dengan port yang digunakan adalah 5000
 #### Buatlah Domain jualbelikapal.A10.com pada EniesLobby menggunakan bind9
 
+#### Buat Config di Bind9 Enies Lobby
+
+Config Domainnya adalah sebagai berikut dengan membuat file bernama jualbelikapal.A10.com :
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%208/configdomain.jpeg)
+
+untuk named.conf.local kita ubah menjadi seperti berikut :
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%208/zone.jpeg)
+
+
 #### Pada node Water7, buka "/etc/squid/squid.conf"
 
 ```
 nano /etc/squid/squid.conf
 ```
 
-kemudian isikan konfigurasi berikut
+#### kemudian isikan konfigurasi berikut
 
 ```
 http_port 5000
@@ -254,7 +265,10 @@ visible_hostname jualbelikapal.A10.com
 http_access allow all
 ```
 
-Setelah itu, simpan dan restart squid
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%208/Config.jpeg)
+
+
+#### Setelah itu, simpan dan restart squid
 
 ```
 service squid restart
@@ -263,14 +277,23 @@ service squid restart
 #### Kemudian pada Loguetown, aktifkan Proxynya dengan
 
 ```
-export http_proxy="http://10.4.2.3:5000"
+export http_proxy="http://jualbelikapal.A10.com:5000"
 ```
 
-di cek proxynya dengan command
+
+#### di cek proxynya dengan command
 
 ```
-env | grep -i 
+env | grep -i jual
 ```
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%208/ExportProxy.jpeg)
+
+#### Hasilnya adalah sebagai berikut :
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%208/Testing.jpeg)
+
+
 
 #### Setelah di hidupkan proxynya, akses jualbelikapal.A10.com di Loguetown
 
@@ -278,19 +301,94 @@ env | grep -i
 ### 9. Agar transaksi jual beli lebih aman dan pengguna website ada dua orang, proxy dipasang autentikasi user proxy dengan enkripsi MD5 dengan dua username, yaitu luffybelikapalyyy dengan password luffy_yyy dan zorobelikapalyyy dengan password zoro_yyy
 #### Pada node Water7 dijalankan perintah berikut
 
+Untuk membuat ausername serta password dilakukan perintah berikut :
+
 ```
 htpasswd -m /etc/squid/passwd luffybelikapalA10
+htpasswd -m /etc/squid/passwd zorobelikapalA10
 ```
 
+#### Dilakukan sebagai berikut di Water7 :
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%209/pembuatan.jpeg)
+
+#### Setelah itu memasukkan ke config squidnya di squid.conf :
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%209/config.jpeg)
+
+#### Hasilnya adalah sebagai berikut : 
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%209/Hasil.jpeg)
 
 
 ### 10. Transaksi jual beli tidak dilakukan setiap hari, oleh karena itu akses internet dibatasi hanya dapat diakses setiap hari Senin-Kamis pukul 07.00-11.00 dan setiap hari Selasa-Jum’at pukul 17.00-03.00 keesokan harinya (sampai Sabtu pukul 03.00)
 
+#### Buat Config di file acl.conf di Water7
+
+Hasilnya adalah sebagai berikut : 
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2010/Config1.jpeg)
+
+#### Ubah juga config di squid.conf dengan konfigurasi seperti berikut :
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2010/Config2.jpeg)
+
+#### Setelah itu kita lakukan testing di client yaitu loguetown atau alabasta
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2010/testing1.jpeg)
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2010/testing2.jpeg)
+
 
 ### 11. Agar transaksi bisa lebih fokus berjalan, maka dilakukan redirect website agar mudah mengingat website transaksi jual beli kapal. Setiap mengakses google.com, akan diredirect menuju super.franky.yyy.com dengan website yang sama pada soal shift modul 2. Web server super.franky.yyy.com berada pada node Skypie
 
+#### Menambahkan config di squid.conf 
+
+Tambahkan config seperti berikut untuk membuat google.com akan diblock dan diarahakan ke super.franky.A10.com
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2011/Config.jpeg)
+
+#### Setelah itu kita lakukan testing :
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2011/Testing1.jpeg)
+
+#### dan kita akan melewati authentikasi :
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2011/Auth.jpeg)
+
+#### Setelah kita masukkan sesuai username dan password yang kita buat yaitu luffybelikapalA10 dan zorobelikapalA10 maka akan mengahasilkan berikut :
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2011/Hasil.jpeg)
 
 ### 12. Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencari harta karun di super.franky.yyy.com. Tugas pencarian dibagi menjadi dua misi, Luffy bertugas untuk mendapatkan gambar (.png, .jpg), sedangkan Zoro mendapatkan sisanya. Karena Luffy orangnya sangat teliti untuk mencari harta karun, ketika ia berhasil mendapatkan gambar, ia mendapatkan gambar dan melihatnya dengan kecepatan 10 kbps 
 
+#### Membuat file baru bernama acl-bandwith.conf di folder squid dengan config seperti berikut pool 1 untuk luffybelikapalA10 dan pool 2 untuk zorobelikapalA10 :
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2012/ConfigAclBandwith.jpeg)
+
+#### Setelah itu kita menambahkan include di squid.conf
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2012/includeconfig.jpeg)
+
+#### Setelah itu kita testing
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2012/luffybelikapal.jpeg)
+
+#### Uji coba download bahwa bandwith sudah dibatasi sebelumnya
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2012/kecepatanluffy.jpeg)
 
 ### 13. Sedangkan, Zoro yang sangat bersemangat untuk mencari harta karun, sehingga kecepatan kapal Zoro tidak dibatasi ketika sudah mendapatkan harta yang diinginkannya
+
+#### Sama dengan config diatas pool 2 yaitu untuk zorobelikapalA10 yang tidak dibatasi oleh bandwith kita langsung testing saja 
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2013/zorobelikapal.jpeg)
+
+#### Apabila zoro mencoba membuka file jpg dan png tidak akan dibatasi oleh bandwith serta file-file lain juga tidak dibatasi bandwith
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2013/kecepatanzoro.jpeg)
+
+![image](https://github.com/Fitrah1812/Jarkom-Modul-3-A10-2021/blob/main/Dokumentasi%20Praktikum%20Modul%203/Nomor%2013/zoroloadfile.jpeg)
+
+Berikut merupakan pengerjaan yang sudah kami kerjakan. Terimakasih. Wassalamualaikum Warrahmatullahi Wabarakatuh
+
