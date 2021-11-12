@@ -29,7 +29,7 @@ Setelah itu tambahkan konfigurasi pada /etc/default/isc-dhcp-server
 ```
 INTERFACES="eth0"
 ```
-
+![image](https://imgur.com/blLyVzo.png)
 
 #### Water7 sebagai Proxy Server, maka pada Water7 diinstall squid
 
